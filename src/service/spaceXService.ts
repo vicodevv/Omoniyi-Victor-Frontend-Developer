@@ -8,16 +8,6 @@ type GetCapsulesFunction = (query?: { [key: string]: string | undefined }) => Pr
 
 export const SpaceXService = {
 
-//   getCapsules: async (query?: { [key: string]: string | undefined }): Promise<any> => {
-//     try {
-//       const response = await axios.get(`${SPACEX_API_BASE}/capsules`, { params: query });
-//       return response.data;
-//     } catch (error) {
-//       console.error('Error fetching capsules:', error);
-//       throw error;
-//     }
-//   },
-
   getCapsules: async (query?: { [key: string]: string | undefined }): Promise<any> => {
     try {
       const response = await axios.get(`${SPACEX_API_BASE}/capsules`, { params: query });

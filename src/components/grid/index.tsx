@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Card, CardContent, Typography, Pagination, Modal, Box } from '@mui/material';
+import { Grid, Card, CardContent, Typography, Pagination, DialogTitle } from '@mui/material';
+import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
+import Dialog from '@mui/material/Dialog';
+import Slide from '@mui/material/Slide';
+import { TransitionProps } from '@mui/material/transitions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 
 interface ResultGridProps {
   data: any[];
   itemsPerPage: number;
   onItemClick: (item: any) => void;
 }
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>,
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const ResultGrid: React.FC<ResultGridProps> = ({ data, itemsPerPage, onItemClick }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,7 +42,7 @@ const ResultGrid: React.FC<ResultGridProps> = ({ data, itemsPerPage, onItemClick
     setCurrentPage(pageNumber);
   };
 
-  const handleCardClick = (item: any) => {
+  const handleClickOpen = (item: any) => {
     setSelectedItem(item);
     setOpen(true);
     onItemClick(item);
@@ -43,10 +58,10 @@ const ResultGrid: React.FC<ResultGridProps> = ({ data, itemsPerPage, onItemClick
       <Grid container spacing={2} className='p-10'>
         {currentItems.map((item) => (
           <Grid item key={item.id} xs={12} sm={6} md={4} lg={3}>
-            <Card onClick={() => handleCardClick(item)} style={{ cursor: 'pointer' }} className='h-[12.75rem]'>
+            <Card onClick={() => handleClickOpen(item)} style={{ cursor: 'pointer' }} className='h-600 flex flex-col items-start justify-between m-1 p-1 h-17rem w-full max-w-35rem rounded-4 bg-white shadow-md transition-all duration-300 ease-in-out cursor-pointer'>
               <CardContent>
-                <Typography variant="h6" component="div">
-                  CAPSULE: {item.capsule_serial}
+                <Typography variant="h6" component="div" className='flex justify-center items-center align-middle self-center py-12'>
+                  {item.capsule_serial} <ArrowOutwardIcon className='ml-2' />
                 </Typography>
               </CardContent>
             </Card>
@@ -61,45 +76,44 @@ const ResultGrid: React.FC<ResultGridProps> = ({ data, itemsPerPage, onItemClick
         onChange={(event, page) => handlePageChange(page)}
         className='mb-9 flex justify-center items-center'
       />
-
       {/* Modal for displaying item details */}
       {selectedItem && (
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
+        <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+        className='flex justify-center items-center'
         >
-          <Box>
-            <Typography variant="h5" component="div" className='mb-2'>
-              Item Details
-            </Typography>
-            <table>
-              <tbody>
-                <tr>
-                  <td>ID:</td>
-                  <td>{selectedItem.id}</td>
-                </tr>
-                <tr>
-                  <td>Serial:</td>
-                  <td>{selectedItem.capsule_serial}</td>
-                </tr>
-                <tr>
-                  <td>Status:</td>
-                  <td>{selectedItem.status}</td>
-                </tr>
-                <tr>
-                  <td>Type:</td>
-                  <td>{selectedItem.type}</td>
-                </tr>
-                <tr>
-                  <td>Reuse Count:</td>
-                  <td>{selectedItem.reuse_count}</td>
-                </tr>
-              </tbody>
-            </table>
-          </Box>
-        </Modal>
+          <DialogTitle className='text-center'>Item Details</DialogTitle>
+          <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            <div className='flex flex-col justify-center items-center'>
+              <div className='flex flex-row justify-center items-center'>
+                <p className='font-bold'>Capsule Serial: </p>
+                <p className='ml-2'>{selectedItem.capsule_serial}</p>
+              </div>
+              <div className='flex flex-row justify-center items-center'>
+                <p className='font-bold'>Capsule ID: </p>
+                <p className='ml-2'>{selectedItem.capsule_id}</p>
+              </div>
+              <div className='flex flex-row justify-center items-center'>
+                <p className='font-bold'>Status: </p>
+                <p className='ml-2'>{selectedItem.status}</p>
+              </div>
+              <div className='flex flex-row justify-center items-center'>
+                <p className='font-bold'>Original Launch: </p>
+                <p className='ml-2'>{selectedItem.original_launch}</p>
+              </div>
+              <div className='flex flex-row justify-center items-center'>
+                <p className='font-bold'>Type: </p>
+                <p className='ml-2'>{selectedItem.type}</p>
+              </div>
+            </div>
+          </DialogContentText>
+        </DialogContent>
+        </Dialog>
       )}
     </div>
   );

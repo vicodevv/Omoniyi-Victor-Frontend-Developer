@@ -8,6 +8,9 @@ module.exports = {
       backgroundImage: {
         purp: "url('/src/assets/purple-bg.png')",
       },
+      fontFamily: {
+        'CustomFont': ['CustomFont', 'sans-serif'],
+      },
     },
     colors: {
       ...colors,

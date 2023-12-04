@@ -12,19 +12,23 @@ const Search: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false); // Add loading state
 
+  const { data: capsules, isError } = SpaceXService.useGetCapsules({
+    status: status || undefined,
+    original_launch: originalLaunch || undefined,
+    type: type || undefined,
+  });
+
   const handleSearch = async () => {
     setIsLoading(true); // Set loading to true when starting the search
-    const query = {
-      status: status || undefined,
-      original_launch: originalLaunch || undefined,
-      type: type || undefined,
-    };
-
-    try {
-      await SpaceXService.getCapsules(query);
-    } finally {
-      setIsLoading(false);
-    }
+      try {
+        await SpaceXService.getCapsules({
+          status: status || undefined,
+          original_launch: originalLaunch || undefined,
+          type: type || undefined,
+        });
+      } catch (error) {
+        console.log(error);
+      }
   };
 
   const handleItemClick = useCallback((item: any) => {
@@ -37,16 +41,9 @@ const Search: React.FC = () => {
     setSelectedItem(null);
   };
 
-  const { data: capsules, isError } = SpaceXService.useGetCapsules({
-    status: status || undefined,
-    original_launch: originalLaunch || undefined,
-    type: type || undefined,
-  });
-
-
   return (
-    <div className='flex flex-col items-center justify-center mt-8'>
-      <h1 className='text-3xl font-bold'>Search Capsules</h1>
+    <div className='flex flex-col items-center justify-center mt-20'>
+      <h1 className='text-3xl font-bold font-CustomFont sans-serif'>Search Capsules</h1>
       <div className='flex space-x-4 flex-row items-center justify-center mt-5 p-3 mr-3'>
         <TextField
           label="Status"
