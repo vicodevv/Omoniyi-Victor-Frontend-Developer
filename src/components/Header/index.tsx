@@ -1,7 +1,7 @@
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import Logo from '../../assets/spacex-logo.png';
+import Logo from '../../assets/images/spacex-logo.png';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const Header = () => {
   });
 
   return (
-    <div className="flex justify-between items-center px-[5%] py-7 border-b-[0.5px] border-black border-solid">
+    <div className="flex justify-between items-center px-[5%] py-7">
       <img
         src={Logo}
         alt="SpaceX"
@@ -20,7 +20,8 @@ const Header = () => {
       />
       <div className="flex gap-5">
         <Button
-            variant="contained"
+            color='warning'
+            variant='outlined'
             onClick={() => navigate('/')}
             className={`${isSmallDevice ? '!w-[92px]' : '!w-[141px] !h-[48px]'}`}
         >

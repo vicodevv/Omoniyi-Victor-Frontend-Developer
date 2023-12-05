@@ -58,9 +58,9 @@ const ResultGrid: React.FC<ResultGridProps> = ({ data, itemsPerPage, onItemClick
       <Grid container spacing={2} className='p-10'>
         {currentItems.map((item) => (
           <Grid item key={item.id} xs={12} sm={6} md={4} lg={3}>
-            <Card onClick={() => handleClickOpen(item)} style={{ cursor: 'pointer' }} className='h-600 flex flex-col items-start justify-between m-1 p-1 h-17rem w-full max-w-35rem rounded-4 bg-white shadow-md transition-all duration-300 ease-in-out cursor-pointer'>
+            <Card onClick={() => handleClickOpen(item)} style={{ cursor: 'pointer', backgroundColor: 'black' }} className='h-[12.75rem] mr-5 bg-black border-[0.5px] border-white border-solid'>
               <CardContent>
-                <Typography variant="h6" component="div" className='flex justify-center items-center align-middle self-center py-12'>
+                <Typography variant="h6" component="div" className='flex justify-center items-center align-middle self-center py-12 text-white'>
                   {item.capsule_serial} <ArrowOutwardIcon className='ml-2' />
                 </Typography>
               </CardContent>
@@ -74,7 +74,7 @@ const ResultGrid: React.FC<ResultGridProps> = ({ data, itemsPerPage, onItemClick
         count={totalPages}
         page={currentPage}
         onChange={(event, page) => handlePageChange(page)}
-        className='mb-9 flex justify-center items-center'
+        className='mb-9 flex justify-center items-center bg-white'
       />
       {/* Modal for displaying item details */}
       {selectedItem && (

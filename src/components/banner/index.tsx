@@ -1,7 +1,12 @@
-import React from 'react';
-import Astronaut from '../../assets/astronaut.jpg';
+import React, { useEffect } from 'react';
+import Astronaut from '../../assets/images/astronaut.jpg';
+import { split } from '../../animation/text';
 
 const Banner = () => {
+
+  useEffect(() => {
+    split();
+  });
     return (
         <div className="grid lg:grid-cols-[1fr,max-content] xl:grid-cols-[42%,1fr] gap-x-10">
         <div className="pt-[6%] grid grid-rows-[max-content,1fr,max-content] items-center">
@@ -9,7 +14,7 @@ const Banner = () => {
             <h1 className="text-4xl md:text-5xl xl:text-6xl leading-[1.1] font-extrabold font-CustomFont sans-serif">
             SpaceX: Elevating Humanity Beyond Earth's Limits
             </h1>
-            <p className="text-base font-normal max-sm:my-12 my-8 lg:max-w-[500px] font-CustomFont sans-serif">
+            <p className="text-base font-normal max-sm:my-12 my-8 lg:max-w-[500px] font-CustomFont sans-serif leading-8" data-animation='paragraph'>
             At SpaceX, we pioneer cutting-edge space technology since 2002, aiming to redefine the possibilities of interplanetary life. Join us in the quest to make living on other planets a reality.
             </p>
           </div>
