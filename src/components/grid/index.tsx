@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Grid, Card, CardContent, Typography, Pagination, DialogTitle } from '@mui/material';
+import React, { useState } from 'react';
+import { Pagination, Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
-import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 
 interface ResultGridProps {
   data: any[];
@@ -21,22 +18,16 @@ const Transition = React.forwardRef(function Transition(
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
 const ResultGrid: React.FC<ResultGridProps> = ({ data, itemsPerPage, onItemClick }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedItem, setSelectedItem] = useState<any | null>(null);
+  const [open, setOpen] = useState(false);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
-  const [open, setOpen] = React.useState(false);
-
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [data]);
+  const totalPages = Math.max(Math.ceil(data.length / itemsPerPage));
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -55,19 +46,19 @@ const ResultGrid: React.FC<ResultGridProps> = ({ data, itemsPerPage, onItemClick
 
   return (
     <div>
-      <Grid container spacing={2} className='p-10'>
+      <div className='grid grid-cols-4 gap-y-5 gap-x-10 mt-10 items-center max-lg:grid-cols-2 px-5 max-sm:grid-cols-1'>
         {currentItems.map((item) => (
-          <Grid item key={item.id} xs={12} sm={6} md={4} lg={3}>
-            <Card onClick={() => handleClickOpen(item)} style={{ cursor: 'pointer', backgroundColor: 'black' }} className='h-[12.75rem] mr-5 bg-black border-[0.5px] border-white border-solid'>
-              <CardContent>
-                <Typography variant="h6" component="div" className='flex justify-center items-center align-middle self-center py-12 text-white'>
+          <div key={item.id}>
+            <div onClick={() => handleClickOpen(item)} style={{ cursor: 'pointer', backgroundColor: 'black' }} className='h-[12.75rem] bg-black border-[0.5px] mb-9 border-white border-solid w-[250px] flex justify-center items-center'>
+              <div>
+                <p className='text-white'>
                   {item.capsule_serial} <ArrowOutwardIcon className='ml-2' />
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+                </p>
+              </div>
+            </div>
+          </div>
         ))}
-      </Grid>
+      </div>
 
       {/* Pagination Controls */}
       <Pagination
@@ -76,6 +67,7 @@ const ResultGrid: React.FC<ResultGridProps> = ({ data, itemsPerPage, onItemClick
         onChange={(event, page) => handlePageChange(page)}
         className='mb-9 flex justify-center items-center bg-white'
       />
+
       {/* Modal for displaying item details */}
       {selectedItem && (
         <Dialog
@@ -112,8 +104,8 @@ const ResultGrid: React.FC<ResultGridProps> = ({ data, itemsPerPage, onItemClick
               </div>
             </div>
           </DialogContentText>
-        </DialogContent>
-        </Dialog>
+          </DialogContent>
+          </Dialog>
       )}
     </div>
   );

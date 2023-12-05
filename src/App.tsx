@@ -1,6 +1,5 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import './App.css';
@@ -15,7 +14,6 @@ function App() {
           <Route path="/" element={<Home />} />
         </Routes>
       </Router>
-      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }

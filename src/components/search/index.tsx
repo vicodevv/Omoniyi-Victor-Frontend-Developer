@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { TextField, Button, CircularProgress } from '@mui/material';
-import { SpaceXService } from '../../service/spaceXService';
 import ResultGrid from '../grid';
+import { useQuery } from 'react-query';
 import { styled } from '@mui/system';
+import { SpaceXService } from 'service/spaceXService';
 
 const CustomTextField = styled(TextField)({
   "& .MuiInputLabel-root": {
@@ -30,45 +31,30 @@ const Search: React.FC = () => {
   const [status, setStatus] = useState('');
   const [originalLaunch, setOriginalLaunch] = useState('');
   const [type, setType] = useState('');
-  const [isModalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [searchClicked, setSearchClicked] = useState(false);
 
-  const { data: capsules, isError } = SpaceXService.useGetCapsules({
-    status: status || undefined,
-    original_launch: originalLaunch || undefined,
-    type: type || undefined,
-  });
-
-  const handleSearch = async () => {
-    setIsLoading(true);
-    try {
-      await SpaceXService.getCapsules({
-        status: status || undefined,
-        original_launch: originalLaunch || undefined,
-        type: type || undefined,
-      });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
+  const { data: capsules, isLoading, isError } = useQuery(
+    ['capsules', { status, original_launch: originalLaunch, type }],
+    () => SpaceXService.getCapsules({ status, original_launch: originalLaunch, type }),
+    {
+      enabled: searchClicked && (status !== '' || originalLaunch !== '' || type !== ''),
+      initialData: [], // Set initialData to an empty array to prevent initial rendering
     }
+  );
+
+  const handleSearch = () => {
+    setSearchClicked(true); // Set searchClicked to true when the search button is clicked
   };
 
   const handleItemClick = useCallback((item: any) => {
     setSelectedItem(item);
-    setModalOpen(true);
   }, []);
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-    setSelectedItem(null);
-  };
 
   return (
     <div className='flex flex-col items-center justify-center mt-20'>
       <h1 className='text-3xl font-bold font-CustomFont sans-serif'>Search Capsules</h1>
-      <div className='flex space-x-4 flex-row items-center justify-center mt-5 p-3 mr-3'>
+      <div className='flex space-x-4 flex-row items-center justify-center m-5 p-3 mr-3'>
         <CustomTextField
           label="Status"
           value={status}
@@ -92,16 +78,15 @@ const Search: React.FC = () => {
         color='warning'
         variant='outlined'
         onClick={handleSearch}
-        className='mt-5 mb-5'
+        className='mt-8'
+        disabled={isLoading}
       >
-        Search
+        {isLoading ? <CircularProgress size={24} /> : 'Search'}
       </Button>
-
-      {isLoading && <CircularProgress className='mt-3' />}
 
       {isError && <p>Error loading data</p>}
 
-      {capsules && (
+      {searchClicked && capsules && (
         <ResultGrid
           data={capsules}
           itemsPerPage={12}

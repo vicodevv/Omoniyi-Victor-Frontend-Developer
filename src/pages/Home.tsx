@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "components/header/index";
-import Banner from "components/banner/index";
-import Search from "components/search/index";
+import Header from "components/header";
+import Banner from "components/banner";
+import Search from "components/search";
 
 const Home = () => {    
     return (
