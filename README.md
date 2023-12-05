@@ -64,7 +64,7 @@ Run the code
 
 ## Deployment
 
-The application is deployed on Vercel: [Deployment Link](https://your-vercel-deployment-link)
+The application is deployed on Vercel: [Deployment Link]()
 
 ## Authors
 
