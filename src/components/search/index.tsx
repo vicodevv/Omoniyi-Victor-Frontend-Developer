@@ -4,7 +4,7 @@ import { TextField, Button, CircularProgress } from '@mui/material';
 import ResultGrid from '../grid';
 import { useQuery } from 'react-query';
 import { styled } from '@mui/system';
-import { SpaceXService } from 'service/spaceXService';
+import { SpaceXService } from '../../service/spaceXService';
 
 const CustomTextField = styled(TextField)({
   "& .MuiInputLabel-root": {
