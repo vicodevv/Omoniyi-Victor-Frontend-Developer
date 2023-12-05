@@ -40,7 +40,9 @@
     "type": "module",
     "extensionsToTreatAsEsm": [
       ".ts",
-      ".tsx"
+      ".tsx",
+      ".js",
+      ".jsx"
     ],
     "testEnvironment": "jsdom",
     "transform": {
