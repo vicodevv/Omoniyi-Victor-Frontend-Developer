@@ -57,6 +57,12 @@ Run the code
     npm run start
 ```
 
+Test the code
+
+```bash
+    npm run test
+```
+
 ## Key Features
 
 - View all capsules
