@@ -36,13 +36,13 @@ You can get the latest version of NPM from [here](https://www.npmjs.com/get-npm)
 Clone the project
 
 ```bash
-  git clone git@github.com:vicodevv/space-x.git
+  git clone git@github.com:vicodevv/Omoniyi-Victor-Frontend-Developer.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd spacex
+  cd Omoniyi-Victor-Frontend-Developer
 ```
 
 Install dependencies
@@ -54,7 +54,7 @@ Install dependencies
 Run the code
 
 ```bash
-    npm run start
+    npm start
 ```
 
 Test the code
@@ -76,7 +76,7 @@ Test the code
 
 ## Video Demo
 
-[![Watch the video](https://www.youtube.com/watch?v=ESyIMt_NfCY)]
+- [Watch the video](https://www.youtube.com/watch?v=ESyIMt_NfCY)
 
 ## Authors
 
