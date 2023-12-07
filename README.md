@@ -68,9 +68,15 @@ Test the code
 - View all capsules
 - View details of each capsule
 
-## Deployment
+## Screenshots
 
-The application is deployed on Vercel: [Deployment Link]()
+<img src="https://github.com/vicodevv/Omoniyi-Victor-Frontend-Developer/assets/55485439/b282f8f5-dd85-49d3-85e0-191f585f79a5" width=800>
+
+<img src="https://github.com/vicodevv/Omoniyi-Victor-Frontend-Developer/assets/55485439/9b50320f-2822-489d-8004-7ba68a0f5310" width=800>
+
+## Video Demo
+
+[![Watch the video](https://www.youtube.com/watch?v=ESyIMt_NfCY)]
 
 ## Authors
 
