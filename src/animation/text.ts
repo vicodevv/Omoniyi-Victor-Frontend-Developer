@@ -4,6 +4,11 @@ import { gsap } from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
+if (process.env.NODE_ENV !== 'test') {
+  require('gsap/ScrollTrigger');
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 export const split = () => {
   const p = document.querySelectorAll("[data-animation='paragraph']");
   const H = document.querySelectorAll("[data-animation='header']");

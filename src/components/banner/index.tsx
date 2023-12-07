@@ -6,7 +6,7 @@ const Banner = () => {
 
   useEffect(() => {
     split();
-  });
+  }, []);
     return (
         <div className="grid lg:grid-cols-[1fr,max-content] xl:grid-cols-[42%,1fr] gap-x-10">
         <div className="pt-[6%] grid grid-rows-[max-content,1fr,max-content] items-center">

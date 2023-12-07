@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { TextField, Button, CircularProgress } from '@mui/material';
 import ResultGrid from '../grid';
 import { useQuery } from 'react-query';
@@ -34,22 +34,35 @@ const Search: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [searchClicked, setSearchClicked] = useState(false);
 
-  const { data: capsules, isLoading, isError } = useQuery(
+
+  const { data: capsules, isLoading, isError, refetch } = useQuery(
     ['capsules', { status, original_launch: originalLaunch, type }],
     () => SpaceXService.getCapsules({ status, original_launch: originalLaunch, type }),
     {
-      enabled: searchClicked && (status !== '' || originalLaunch !== '' || type !== ''),
-      initialData: [], // Set initialData to an empty array to prevent initial rendering
+      enabled: searchClicked,
+      initialData: [],
     }
   );
 
   const handleSearch = () => {
-    setSearchClicked(true); // Set searchClicked to true when the search button is clicked
+    setSearchClicked(true);
+  };
+
+  const handleInputChange = () => {
+    setSearchClicked(false);
   };
 
   const handleItemClick = useCallback((item: any) => {
     setSelectedItem(item);
   }, []);
+
+  // Use Effect to fetch all capsules when the component mounts
+  useEffect(() => {
+    SpaceXService.getCapsules().then((initialCapsules) => {
+      // Set the initial data for the query
+      refetch(initialCapsules);
+    });
+  }, [refetch]);
 
   return (
     <div className='flex flex-col items-center justify-center mt-20'>
@@ -58,19 +71,19 @@ const Search: React.FC = () => {
         <CustomTextField
           label="Status"
           value={status}
-          onChange={(e) => setStatus(e.target.value)}
+          onChange={(e) => { setStatus(e.target.value); handleInputChange(); }}
           className='mr-5'
         />
         <CustomTextField
           value={originalLaunch}
           type='date'
-          onChange={(e) => setOriginalLaunch(e.target.value)}
+          onChange={(e) => { setOriginalLaunch(e.target.value); handleInputChange(); }}
           className='mr-5'
         />
         <CustomTextField
           label="Type"
           value={type}
-          onChange={(e) => setType(e.target.value)}
+          onChange={(e) => { setType(e.target.value); handleInputChange(); }}
           className='mr-5'
         />
       </div>
@@ -83,16 +96,14 @@ const Search: React.FC = () => {
       >
         {isLoading ? <CircularProgress size={24} /> : 'Search'}
       </Button>
-
-      {isError && <p>Error loading data</p>}
-
-      {searchClicked && capsules && (
+      {capsules && (
         <ResultGrid
           data={capsules}
           itemsPerPage={12}
           onItemClick={handleItemClick}
         />
       )}
+      {isError && <p>Error loading data</p>}
     </div>
   );
 };

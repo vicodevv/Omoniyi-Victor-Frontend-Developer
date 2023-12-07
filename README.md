@@ -36,7 +36,7 @@ You can get the latest version of NPM from [here](https://www.npmjs.com/get-npm)
 Clone the project
 
 ```bash
-  git clone git@github.com:vicodevv/spacex.git
+  git clone git@github.com:vicodevv/space-x.git
 ```
 
 Go to the project directory

@@ -1,11 +1,8 @@
 import { useMediaQuery } from 'react-responsive';
-import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Logo from '../../assets/images/spacex-logo.png';
 
 const Header = () => {
-  const navigate = useNavigate();
-
   const isSmallDevice = useMediaQuery({
     query: '(max-width: 576px)',
   });
@@ -16,13 +13,11 @@ const Header = () => {
         src={Logo}
         alt="SpaceX"
         className="w-[250px] h-[48px] cursor-pointer"
-        onClick={() => navigate('/')}
       />
       <div className="flex gap-5">
         <Button
             color='warning'
             variant='outlined'
-            onClick={() => navigate('/')}
             className={`${isSmallDevice ? '!w-[92px]' : '!w-[141px] !h-[48px]'}`}
         >
             Get Started
